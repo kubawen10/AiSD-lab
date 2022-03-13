@@ -72,6 +72,7 @@ public class Lista1Zadanie2 {
                 else{
                     //jezeli = to zaczynamy tworzenie drugiego id
                     if(c=='='){
+                        //id1=id2=id3
                         if(id1.length()!=0){
                             output += currentId+"=";
                         }
