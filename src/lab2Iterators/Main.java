@@ -27,8 +27,14 @@ public class Main {
 //        }
 
         SeriesGenerator<Integer> sEuler = new SeriesEuler<>();
-        Series<Integer> s2 = new Series<>(sEuler);
+        FiniteSeries<Integer> s2 = new FiniteSeries<>(sEuler, 5);
         for (Integer x : s2) {
+            System.out.println(x);
+        }
+
+        System.out.println();
+        for (Integer x :
+                s2) {
             System.out.println(x);
         }
     }

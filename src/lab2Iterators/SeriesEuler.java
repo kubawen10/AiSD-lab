@@ -1,8 +1,8 @@
 package lab2Iterators;
 
-public class SeriesEuler<E> implements SeriesGenerator<E>{
+public class SeriesEuler<E> implements SeriesGenerator<Integer>{
     @Override
-    public E generate(int n) {
-        return (E)(Object)(n*n-n+41);
+    public Integer generate(int n) {
+        return (n*n-n+41);
     }
 }

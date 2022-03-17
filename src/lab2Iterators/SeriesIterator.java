@@ -3,7 +3,8 @@ package lab2Iterators;
 import java.util.Iterator;
 
 public class SeriesIterator<E> implements Iterator<E> {
-    private int n = 1;
+    private int i = 1;
+
     private SeriesGenerator<E> seriesGenerator;
 
     public SeriesIterator(SeriesGenerator<E> s) {
@@ -12,11 +13,25 @@ public class SeriesIterator<E> implements Iterator<E> {
 
     @Override
     public boolean hasNext() {
-        return n<20;
+        return true;
     }
 
     @Override
     public E next() {
-        return seriesGenerator.generate(n++);
+        return seriesGenerator.generate(i++);
     }
+
+    public int getI(){
+        return i;
+    }
+
+    public void setI(int i){
+        this.i=i;
+    }
+
+    public SeriesGenerator<E> getSeriesGenerator(){
+        return seriesGenerator;
+    }
+
+
 }

@@ -1,8 +1,8 @@
 package lab2Iterators;
 
-public class Series2n<E> implements SeriesGenerator<E>{
+public class Series2n<E> implements SeriesGenerator<Integer>{
     @Override
-    public E generate(int n) {
-        return (E)(Object)(2*n);
+    public Integer generate(int n) {
+        return (2*n);
     }
 }
