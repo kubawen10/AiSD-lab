@@ -3,6 +3,35 @@ package lab3ListyJednokierunkowe;
 public class Main {
     public static void main(String[] args) {
         OneWayLinkedListWithSentinel<Integer> l = new OneWayLinkedListWithSentinel<>();
+        System.out.println("Modyfikacja: ");
+        System.out.println(l);
+        System.out.println("obrot");
+        l.reverse();
+        System.out.println(l);
+        System.out.println();
+        l.add(1);
+        System.out.println(l);
+        System.out.println("Obrot");
+        l.reverse();
+        System.out.println(l);
+        System.out.println();
+        l.add(2);
+        System.out.println(l);
+        System.out.println("Obrot");
+        l.reverse();
+        System.out.println(l);
+        System.out.println();
+        l.add(3);
+        System.out.println(l);
+        System.out.println("Obrot");
+        l.reverse();
+        System.out.println(l);
+
+
+
+        System.out.println("Koniec modyfikacji: ");
+        System.out.println();
+        l.clear();
         System.out.println(l);
         System.out.println("Size: " + l.size());
         System.out.println("Remove element from empty list " + l.remove(new Element(3)));

@@ -10,6 +10,21 @@ public class OneWayLinkedListWithSentinel<E> implements IList<E> {
         head = new Element<E>();
     }
 
+    public void reverse(){
+        Element actElement = head;
+        Element nextElement = actElement.getNext();
+        Element prevElement = null;
+        while(nextElement != null){
+            actElement = nextElement;
+            nextElement = actElement.getNext();
+            actElement.setNext(prevElement);
+            prevElement = actElement;
+        }
+        head.setNext(prevElement);
+
+
+    }
+
     @Override
     public boolean add(E e) {
         Element tail = head;
