@@ -7,6 +7,11 @@ public class Main {
         l.add("a");
         System.out.println(l.isEmpty());
         l.clear();
+        l.defragment();
+        l.remove("z");
+        l.capacity();
+        l.endCapacity();
+        //l.get(1);
         System.out.println(l.isEmpty());
         l.add("a");
         l.add("b");
@@ -26,35 +31,22 @@ public class Main {
         l.add("n");
         System.out.println(l);
 
-        l.add(10, "x");
-        System.out.println(l);
+        l.add(9, "x");
         l.add(9, "y");
-        System.out.println(l);
-        l.add(8, "z");
-        System.out.println(l);
-
-//        System.out.println("USUWANIE");
-//        System.out.println(l.remove(6));
-//        System.out.println(l);
-//        System.out.println(l.remove(7));
-//        System.out.println(l);
-//        System.out.println(l.remove(8));
-//        System.out.println(l);
-//
-//        l.add("na koniec");
-//        System.out.println(l);
-//
-//        l.add(7, "hi");
-//        System.out.println(l);
-//        l.add(8, "abc");
-//        System.out.println(l);
-//        l.add(7, "hiii");
-//        System.out.println(l);
-//        l.add(7, "xyz");
+        l.add(9, "z");
+        l.add(10, "1");
+        l.add(11, "2");
+        l.remove(4);
         System.out.println(l);
 
-        l.remove(15);
-        l.remove(15);
+
+        System.out.println("Defragment test");
+        System.out.println(l.toStringPriti());
+        l.defragment();
+        System.out.println(l.toStringPriti());
+
         System.out.println(l);
+
+        //l.wyp();
     }
 }

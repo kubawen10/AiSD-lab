@@ -13,6 +13,7 @@ public class Element<E> {
         prev = null;
     }
 
+
     public void addLast(E value) {
         if (next != null) {
             next.addLast(value);
@@ -30,16 +31,28 @@ public class Element<E> {
         E moveRight = shiftRight(index);
         array[index] = value;
 
-        if (moveRight != null) {
-            if (next != null) {
-                // czy dodac nowa tablice z jednym elementem a nie przesuwac?
-                next.addInner(0, moveRight);
-            } else {
-                addNextElement().addLast(moveRight);
-            }
+        if (used==array.length) {
+            addNextElement();
+            next.addInner(0, moveRight);
+
+//            if (next != null) {
+//                // czy dodac nowa tablice z jednym elementem a nie przesuwac?
+//                next.addInner(0, moveRight);
+//            } else {
+//                addNextElement().addLast(moveRight);
+//            }
         } else {
             used++;
         }
+        return true;
+    }
+
+    public boolean addInnerLast(E value){
+        if(used==array.length){
+            return false;
+        }
+        array[used] = value;
+        used++;
         return true;
     }
 
@@ -54,6 +67,7 @@ public class Element<E> {
     public E shiftLeft(int fromIndex) {
         E firstValue = array[fromIndex];
 
+        used--;
         for (int i = fromIndex; i < array.length - 1; i++) {
             array[i] = array[i + 1];
         }
@@ -72,25 +86,28 @@ public class Element<E> {
 
         if (next != null) {
             next.setPrev(prev);
-            System.out.println(next.getPrev());
         }
     }
 
     public E remove(int index) {
         E returnValue = shiftLeft(index);
-        used--;
-        System.out.println(used);
         if (used == 0) {
             remove();
-            System.out.println("removing");
         }
         return returnValue;
-
     }
 
     public Element addNextElement() {
-        next = new Element(array.length);
-        next.setPrev(this);
+        Element newElement = new Element(array.length);
+
+        if(next!=null){
+            next.setPrev(newElement);
+        }
+
+        newElement.setNext(next);
+        newElement.setPrev(this);
+        next = newElement;
+
         return next;
     }
 
@@ -162,11 +179,17 @@ public class Element<E> {
         return equals((Element) o);
     }
 
+    public int getFreeSpace(){
+        return array.length - used;
+    }
+
     @Override
     public String toString() {
         String s = "[";
         for (int i = 0; i < array.length; i++) {
-            s += array[i];
+            if(i<used){
+                s += array[i];
+            }
             if (i != array.length - 1) {
                 s += ", ";
             }

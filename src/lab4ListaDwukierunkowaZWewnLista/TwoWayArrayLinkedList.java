@@ -188,6 +188,64 @@ public class TwoWayArrayLinkedList<E> implements IList<E> {
         return sum;
     }
 
+    public int endCapacity() {
+        if (head == null) {
+            return 0;
+        }
+
+        Element actElement = head;
+        while (actElement.getNext() != null) {
+            actElement = actElement.getNext();
+        }
+
+        return actElement.getFreeSpace();
+    }
+
+    public int capacity() {
+        if (head == null) {
+            return 0;
+        }
+
+        int sum = 0;
+        Element actElement = head;
+        while (actElement != null) {
+            sum += actElement.getFreeSpace();
+            actElement = actElement.getNext();
+        }
+        return sum;
+    }
+
+
+    public void defragment() {
+        Element actElement = head;
+        if (head == null) {
+            return;
+        }
+
+        while (actElement.getNext() != null) {
+            actElement = actElement.getNext();
+            E moveBack;
+            while (actElement.getPrev().getFreeSpace() != 0) {
+
+                moveBack = (E) actElement.shiftLeft(0);
+
+                actElement.getPrev().addInnerLast(moveBack);
+
+                if (actElement.getUsed() == 0) {
+                    actElement.remove();
+
+                    if (actElement.getNext() == null) {
+                        return;
+                    }
+
+                    actElement = actElement.getNext();
+                }
+            }
+        }
+
+    }
+
+
     @Override
     public String toString() {
         String s = "{\n";
@@ -198,6 +256,19 @@ public class TwoWayArrayLinkedList<E> implements IList<E> {
         }
         s += "}";
         return s;
+    }
 
+
+    public String toStringPriti() {
+        String s = "[";
+        Element actElement = head;
+        while (actElement != null) {
+            for (int i = 0; i < actElement.getUsed(); i++) {
+                s += actElement.getValue(i) + ", ";
+            }
+            actElement = actElement.getNext();
+        }
+
+        return s;
     }
 }
