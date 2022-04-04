@@ -18,20 +18,21 @@ public class Main {
 
         markedComparator = new MarkedValueComparator<Integer>(new IntegerComparator());
         generator = new MarkingGenerator<Integer>(new RandomIntegerArrayGenerator(200));
-//        algorithm = new BubbleSort<>(markedComparator);
-//        algorithm = new InsertionSort<>(markedComparator);
-//        algorithm = new SelectSort<>(markedComparator);
-        algorithm = new ShakerSort<>(markedComparator);
-        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "ShakerSortSortRandomIntegersDontCheck");
 
-//        Result result = Tester.runNTimes(algorithm, generator, 65, 20);
-//
-//        printStatistic("time [ms]", result.averageTimeInMilliseconds(), result.timeStandardDeviation());
-//        printStatistic("comparisons", result.averageComparisons(), result.comparisonsStandardDeviation());
-//        printStatistic("swaps", result.averageSwaps(), result.swapsStandardDeviation());
-//
-//        System.out.println("always sorted: " + result.sorted());
-//        System.out.println("always stable: " + result.stable());
+        algorithm = new BubbleSort<>(markedComparator);
+        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "BubbleSortRandomIntegers");
+
+        algorithm = new InsertionSort<>(markedComparator);
+        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "InsertionSortRandomIntegers");
+
+        algorithm = new SelectSort<>(markedComparator);
+        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "SelectSortRandomIntegers");
+
+        algorithm = new ShakerSort<>(markedComparator);
+        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "ShakerSortRandomIntegers");
+
+        //algorithm = new ShakerSort<>(markedComparator);
+        //createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "ShakerSortRandomIntegersCheckIfSorted");
     }
 
     private static void printStatistic(String label, double average, double stdDev) {
@@ -41,5 +42,4 @@ public class Main {
     private static String double2String(double value) {
         return String.format("%.12f", value);
     }
-
 }
