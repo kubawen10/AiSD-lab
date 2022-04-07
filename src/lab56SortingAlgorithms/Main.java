@@ -1,6 +1,9 @@
 package lab56SortingAlgorithms;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 import lab56SortingAlgorithms.core.SortingAlgorithm;
 import lab56SortingAlgorithms.testing.*;
@@ -19,17 +22,22 @@ public class Main {
         markedComparator = new MarkedValueComparator<Integer>(new IntegerComparator());
         generator = new MarkingGenerator<Integer>(new RandomIntegerArrayGenerator(200));
 
-        algorithm = new BubbleSort<>(markedComparator);
-        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "BubbleSortRandomIntegers");
 
-        algorithm = new InsertionSort<>(markedComparator);
-        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "InsertionSortRandomIntegers");
 
-        algorithm = new SelectSort<>(markedComparator);
-        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "SelectSortRandomIntegers");
+        algorithm = new MergeSort<>(markedComparator);
+        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "MergeSort");
 
-        algorithm = new ShakerSort<>(markedComparator);
-        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "ShakerSortRandomIntegers");
+//        algorithm = new BubbleSort<>(markedComparator);
+//        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "BubbleSortRandomIntegers");
+//
+//        algorithm = new InsertionSort<>(markedComparator);
+//        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "InsertionSortRandomIntegers");
+//
+//        algorithm = new SelectSort<>(markedComparator);
+//        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "SelectSortRandomIntegers");
+//
+//        algorithm = new ShakerSort<>(markedComparator);
+//        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "ShakerSortRandomIntegers");
 
         //algorithm = new ShakerSort<>(markedComparator);
         //createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "ShakerSortRandomIntegersCheckIfSorted");

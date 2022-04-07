@@ -29,4 +29,9 @@ public class MarkedValue<T> {
 		return mark;
 	}
 
+	@Override
+	public String toString(){
+		return val.toString();
+	}
+
 }

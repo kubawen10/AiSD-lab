@@ -41,7 +41,7 @@ public class CreateTable<T> {
             }
         }
 
-        SaveTableToTxt.save(rows, tableLabel);
+        //SaveTableToTxt.save(rows, tableLabel);
 
         return rows;
     }
