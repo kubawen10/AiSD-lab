@@ -19,30 +19,19 @@ public class Main {
         markedComparator = new MarkedValueComparator<Integer>(new IntegerComparator());
         generator = new MarkingGenerator<Integer>(new RandomIntegerArrayGenerator(200));
 
-
-
         algorithm = new MergeSortList<>(markedComparator);
-        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "MergeSortList");
-
+        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "MergeSortListRandomIntegers");
 
         algorithm = new MergeSortArray<>(markedComparator);
-        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "MergeSortArray");
+        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "MergeSortArrayRandomIntegers");
 
 
-//        algorithm = new BubbleSort<>(markedComparator);
-//        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "BubbleSortRandomIntegers");
-//
-//        algorithm = new InsertionSort<>(markedComparator);
-//        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "InsertionSortRandomIntegers");
-//
-//        algorithm = new SelectSort<>(markedComparator);
-//        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "SelectSortRandomIntegers");
-//
-//        algorithm = new ShakerSort<>(markedComparator);
-//        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "ShakerSortRandomIntegers");
+        generator = new LinkedListGenerator<>(generator);
+        algorithm = new QuickSort<>(markedComparator, false);
+        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "QuickSortPivot0RandomIntegers");
 
-        //algorithm = new ShakerSort<>(markedComparator);
-        //createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "ShakerSortRandomIntegersCheckIfSorted");
+        algorithm = new QuickSort<>(markedComparator, true);
+        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "QuickSortRandomPivotRandomIntegers");
     }
 
     private static void printStatistic(String label, double average, double stdDev) {

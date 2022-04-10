@@ -15,9 +15,7 @@ public class Tester {
         List<MarkedValue<T>> list = generator.generate(size);
 
         Instant start = Instant.now();
-
         list = algorithm.sort(list);
-
         Instant end = Instant.now();
 
         return new RunResult(Duration.between(start, end).toMillis(), algorithm.comparisons(), algorithm.swaps(),
