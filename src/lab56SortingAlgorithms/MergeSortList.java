@@ -8,8 +8,8 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MergeSort<T> extends SortingAlgorithm<T> {
-    public MergeSort(Comparator<? super T> comparator) {
+public class MergeSortList<T> extends SortingAlgorithm<T> {
+    public MergeSortList(Comparator<? super T> comparator) {
         super(comparator);
     }
 

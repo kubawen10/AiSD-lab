@@ -1,9 +1,6 @@
 package lab56SortingAlgorithms;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 
 import lab56SortingAlgorithms.core.SortingAlgorithm;
 import lab56SortingAlgorithms.testing.*;
@@ -24,8 +21,13 @@ public class Main {
 
 
 
-        algorithm = new MergeSort<>(markedComparator);
-        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "MergeSort");
+        algorithm = new MergeSortList<>(markedComparator);
+        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "MergeSortList");
+
+
+        algorithm = new MergeSortArray<>(markedComparator);
+        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "MergeSortArray");
+
 
 //        algorithm = new BubbleSort<>(markedComparator);
 //        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "BubbleSortRandomIntegers");
