@@ -17,21 +17,21 @@ public class Main {
         CreateTable<Integer> createTable;
 
         markedComparator = new MarkedValueComparator<Integer>(new IntegerComparator());
-        generator = new MarkingGenerator<Integer>(new RandomIntegerArrayGenerator(200));
+        generator = new MarkingGenerator<Integer>(new ReversedIntegerArrayGenerator());
 
         algorithm = new MergeSortList<>(markedComparator);
-        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "MergeSortListRandomIntegers");
+        // = new CreateTable<>(algorithm, generator, 0, 132000, 20, "MergeSortListReversedIntegers");
 
         algorithm = new MergeSortArray<>(markedComparator);
-        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "MergeSortArrayRandomIntegers");
+        //createTable = new CreateTable<>(algorithm, generator, 0, 132000, 20, "MergeSortArrayReversedIntegers");
 
 
         generator = new LinkedListGenerator<>(generator);
         algorithm = new QuickSort<>(markedComparator, false);
-        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "QuickSortPivot0RandomIntegers");
+        createTable = new CreateTable<>(algorithm, generator, 0, 4097, 20, "QuickSortPivot0ReversedIntegers");
 
         algorithm = new QuickSort<>(markedComparator, true);
-        createTable = new CreateTable<>(algorithm, generator, 0, 20000, 20, "QuickSortRandomPivotRandomIntegers");
+        //createTable = new CreateTable<>(algorithm, generator, 0, 132000, 20, "QuickSortRandomPivotReversedIntegers");
     }
 
     private static void printStatistic(String label, double average, double stdDev) {
