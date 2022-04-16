@@ -28,7 +28,7 @@ public class Main {
 
         generator = new LinkedListGenerator<>(generator);
         algorithm = new QuickSort<>(markedComparator, false);
-        createTable = new CreateTable<>(algorithm, generator, 0, 4097, 20, "QuickSortPivot0ReversedIntegers");
+        createTable = new CreateTable<>(algorithm, generator, 0, 4097*2, 20, "QuickSortPivot0ReversedIntegers");
 
         algorithm = new QuickSort<>(markedComparator, true);
         //createTable = new CreateTable<>(algorithm, generator, 0, 132000, 20, "QuickSortRandomPivotReversedIntegers");

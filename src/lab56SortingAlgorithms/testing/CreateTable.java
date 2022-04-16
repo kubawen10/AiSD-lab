@@ -40,7 +40,7 @@ public class CreateTable<T> {
                 i = 1;
             }
         }
-        SaveTableToTxt.save(rows, tableLabel);
+        //SaveTableToTxt.save(rows, tableLabel);
         return rows;
     }
 
