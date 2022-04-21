@@ -6,9 +6,11 @@ import java.util.*;
 
 public class QuickSort<T> extends SortingAlgorithm<T> {
     private boolean random;
-
+    private final Random r = new Random();
+    private Comparator<? super T> comparator;
     public QuickSort(Comparator<? super T> comparator, boolean randomIndex) {
         super(comparator);
+        this.comparator=comparator;
         this.random = randomIndex;
     }
 
@@ -22,7 +24,8 @@ public class QuickSort<T> extends SortingAlgorithm<T> {
         List<T> greater = new LinkedList<>();
 
 
-        int pivot = pivotIndex(list.size());
+        //int pivot = pivotIndex(list.size());   //lab
+        int pivot = pivotIndexCw(list);         //cw
         T pivotValue = list.get(pivot);
 
         Iterator<T> it = list.iterator();
@@ -54,8 +57,29 @@ public class QuickSort<T> extends SortingAlgorithm<T> {
     }
 
     public int pivotIndex(int size) {
-        Random r = new Random();
         return random ? r.nextInt(size) : 0;
+    }
+
+    public int pivotIndexCw(List<T> list){
+        if(list.size()<=100){
+            return pivotIndex(list.size());
+        }
+
+        int i1 = r.nextInt(list.size());
+        int i2 = r.nextInt(list.size());
+        int i3 = r.nextInt(list.size());
+
+        T val1 = list.get(i1);
+        T val2 = list.get(i2);
+        T val3 = list.get(i3);
+
+        if((comparator.compare(val1, val2)<0 && comparator.compare(val2,val3)<0) ||
+                (comparator.compare(val1, val2)>0 && comparator.compare(val2,val3)>0)) return i2;
+
+        else if((comparator.compare(val1, val3)<0 && comparator.compare(val3,val2)<0) ||
+                (comparator.compare(val1, val3)>0 && comparator.compare(val3,val2)>0)) return i3;
+
+        else return i1;
     }
 
 }
