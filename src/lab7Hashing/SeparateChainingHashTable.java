@@ -1,5 +1,7 @@
 package lab7Hashing;
 
+import lab7Hashing.HashFunctions.HashFunction;
+
 import java.util.Comparator;
 import java.util.LinkedList;
 
@@ -13,7 +15,7 @@ public class SeparateChainingHashTable<T> extends HashTable<T> {
     private LinkedList<T>[] table = new LinkedList[10];
     private HashFunction<T> hashFunction;
 
-    protected SeparateChainingHashTable(double maxLoadFactor, Comparator<? super T> comparator,
+    public SeparateChainingHashTable(double maxLoadFactor, Comparator<? super T> comparator,
                                         HashFunction<T> hashFunction) {
         super(maxLoadFactor, comparator);
         for (int i = 0; i < table.length; i++) {
@@ -72,7 +74,7 @@ public class SeparateChainingHashTable<T> extends HashTable<T> {
     private void insertValue(T val, LinkedList<T>[] tab) {
         int index = calculateHash(val) % tab.length;
 
-        if (tab[index].size() == 0) {
+        if (tab[index].size() != 0) {
             collisions += 1;
         }
 

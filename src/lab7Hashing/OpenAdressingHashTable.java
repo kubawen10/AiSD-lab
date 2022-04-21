@@ -1,5 +1,8 @@
 package lab7Hashing;
 
+import lab7Hashing.HashFunctions.HashFunction;
+import lab7Hashing.IncrementalFunctions.IncrementalFunction;
+
 import java.util.Comparator;
 
 public class OpenAdressingHashTable<T> extends HashTable<T> {
@@ -8,13 +11,15 @@ public class OpenAdressingHashTable<T> extends HashTable<T> {
     private int lookUpComparisons = 0;
     private int hashFunctionEvaluations = 0;
 
-    private T[] table = (T[]) new Object[10];
+    private T[] table;
     private HashFunction<T> hashFunction;
     private IncrementalFunction<T> incrementalFunction;
 
-    protected OpenAdressingHashTable(double maxLoadFactor, Comparator<? super T> comparator,
+    public OpenAdressingHashTable(double maxLoadFactor, Comparator<? super T> comparator,
                                      HashFunction<T> hashFunction, IncrementalFunction<T> incrementalFunction) {
         super(maxLoadFactor, comparator);
+
+        table = (T[]) new Object[10];
         this.hashFunction = hashFunction;
         this.incrementalFunction = incrementalFunction;
     }
@@ -52,7 +57,9 @@ public class OpenAdressingHashTable<T> extends HashTable<T> {
         T[] newTable = (T[]) new Object[table.length * 2];
 
         for (int i = 0; i < table.length; i++) {
-            insertValue(table[i], newTable);
+            if(table[i]!=null){
+                insertValue(table[i], newTable);
+            }
         }
 
         table = newTable;
@@ -60,7 +67,10 @@ public class OpenAdressingHashTable<T> extends HashTable<T> {
 
     private int calculateHash(T val, int trial) {
         hashFunctionEvaluations += 1;
-        return hashFunction.hashCode(val) + incrementalFunction.shift(val, trial);
+        int hash = hashFunction.hashCode(val);
+        hash += incrementalFunction.shift(val, trial);
+
+        return hash;
     }
 
     private void insertValue(T val, T[] tab) {
@@ -74,9 +84,9 @@ public class OpenAdressingHashTable<T> extends HashTable<T> {
             collisions += 1;
 
             int i = 0;
+
             while (tab[index] != null) {
                 insertComparisons += 1;
-
                 i++;
                 index = calculateHash(val, i) % tab.length;
             }

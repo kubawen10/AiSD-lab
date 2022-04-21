@@ -7,7 +7,7 @@ public abstract class HashTable<T> {
 	protected final double maxLoadFactor;
 	protected final Comparator<? super T> comparator;
 	
-	protected HashTable(double maxLoadFactor, Comparator<? super T> comparator) {
+	public HashTable(double maxLoadFactor, Comparator<? super T> comparator) {
 		this.maxLoadFactor = maxLoadFactor;
 		this.comparator = comparator;
 	}

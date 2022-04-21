@@ -1,7 +1,5 @@
 package lab7Hashing.HashFunctions;
 
-import lab7Hashing.HashFunction;
-
 public class IntegerHashFunction implements HashFunction<Integer> {
 
     //return squared value if its in range 0;99

@@ -1,4 +1,4 @@
-package lab7Hashing;
+package lab7Hashing.HashFunctions;
 
 public interface HashFunction<T> {
 	int hashCode(T object);
