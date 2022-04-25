@@ -16,7 +16,7 @@ public class OpenAdressingHashTable<T> extends HashTable<T> {
     private IncrementalFunction<T> incrementalFunction;
 
     public OpenAdressingHashTable(double maxLoadFactor, Comparator<? super T> comparator,
-                                     HashFunction<T> hashFunction, IncrementalFunction<T> incrementalFunction) {
+                                  HashFunction<T> hashFunction, IncrementalFunction<T> incrementalFunction) {
         super(maxLoadFactor, comparator);
 
         table = (T[]) new Object[10];
@@ -57,7 +57,7 @@ public class OpenAdressingHashTable<T> extends HashTable<T> {
         T[] newTable = (T[]) new Object[table.length * 2];
 
         for (int i = 0; i < table.length; i++) {
-            if(table[i]!=null){
+            if (table[i] != null) {
                 insertValue(table[i], newTable);
             }
         }
@@ -74,7 +74,7 @@ public class OpenAdressingHashTable<T> extends HashTable<T> {
     }
 
     private void insertValue(T val, T[] tab) {
-        int index = calculateHash(val,0) % tab.length;
+        int index = calculateHash(val, 0) % tab.length;
 
         //bo zawsze sprawdzam czy null
         insertComparisons += 1;
@@ -100,9 +100,9 @@ public class OpenAdressingHashTable<T> extends HashTable<T> {
         int index = calculateHash(object, 0) % table.length;
 
         int i = 0;
-        while(table[index] != null){
-            lookUpComparisons+=1;
-            if(comparator.compare(object, table[index]) ==  0){
+        while (table[index] != null) {
+            lookUpComparisons += 1;
+            if (comparator.compare(object, table[index]) == 0) {
                 return true;
             }
             i++;
@@ -131,5 +131,19 @@ public class OpenAdressingHashTable<T> extends HashTable<T> {
     @Override
     public int hashFunctionEvaluations() {
         return hashFunctionEvaluations;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder("[");
+        for (int i = 0; i < table.length; i++) {
+
+            s.append(table[i]).append(", ");
+        }
+
+        s.setLength(s.length() - 2);
+
+        s.append("]");
+        return s.toString();
     }
 }

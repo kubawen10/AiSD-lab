@@ -73,6 +73,11 @@ public class SeparateChainingHashTable<T> extends HashTable<T> {
 
     private void insertValue(T val, LinkedList<T>[] tab) {
         int index = calculateHash(val) % tab.length;
+        System.out.println(index);
+
+        if(index<0){
+            index+=tab.length;
+        }
 
         if (tab[index].size() != 0) {
             collisions += 1;
