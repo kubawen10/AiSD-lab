@@ -1,11 +1,10 @@
 package lab7Hashing.Testing;
 
-import lab56SortingAlgorithms.testing.comparators.IntegerComparator;
+import lab5_6SortingAlgorithms.testing.comparators.IntegerComparator;
 import lab7Hashing.HashFunctions.HashFunction;
 import lab7Hashing.HashFunctions.IntegerHashFunction;
 import lab7Hashing.HashTable;
 import lab7Hashing.IncrementalFunctions.IncrementalFunction;
-import lab7Hashing.IncrementalFunctions.LinearIncrementalFunction;
 import lab7Hashing.IncrementalFunctions.QuadraticIncrementalFunction;
 import lab7Hashing.OpenAdressingHashTable;
 import lab7Hashing.SeparateChainingHashTable;
