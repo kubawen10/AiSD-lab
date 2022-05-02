@@ -1,4 +1,4 @@
-package lab8BinaryHeap_PriorityQueue;
+package lab8BinaryHeap_PriorityQueue.Heaps;
 
 import java.util.Comparator;
 
@@ -7,7 +7,7 @@ public class ArrayHeap<T> implements BinaryMinHeap<T> {
     private int initialCapacity;
     private Comparator<T> comparator;
 
-    private int currentlyStored = 0;
+    private int currentlyStored;
 
     public ArrayHeap(int initialCapacity, Comparator<T> comparator) {
         this.initialCapacity = initialCapacity;
@@ -54,12 +54,10 @@ public class ArrayHeap<T> implements BinaryMinHeap<T> {
         if (currentlyStored == 0) {
             return null;
         }
-
-        swap(0, currentlyStored - 1);
-        T minimum = heap[currentlyStored - 1];
-        heap[currentlyStored - 1] = null;
         currentlyStored--;
-
+        swap(0, currentlyStored);
+        T minimum = heap[currentlyStored];
+        heap[currentlyStored] = null;
 
         sink(0);
 

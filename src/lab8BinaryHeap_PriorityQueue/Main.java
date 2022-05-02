@@ -1,37 +1,49 @@
 package lab8BinaryHeap_PriorityQueue;
 
+import lab5_6SortingAlgorithms.testing.generation.OrderedIntegerArrayGenerator;
+import lab5_6SortingAlgorithms.testing.generation.RandomIntegerArrayGenerator;
+import lab5_6SortingAlgorithms.testing.generation.ReversedIntegerArrayGenerator;
+import lab5_6SortingAlgorithms.testing.generation.ShuffledIntegerArrayGenerator;
 import lab7Hashing.Comparators.IntegerComparator;
+import lab8BinaryHeap_PriorityQueue.Heaps.ArrayHeap;
+import lab8BinaryHeap_PriorityQueue.Heaps.BinaryMinHeap;
+import lab8BinaryHeap_PriorityQueue.Heaps.TreeHeap;
+import lab8BinaryHeap_PriorityQueue.Sorter.PriorityQueueSorter;
+import lab8BinaryHeap_PriorityQueue.Testing.Result;
+import lab8BinaryHeap_PriorityQueue.Testing.Tester;
+
+import java.util.Comparator;
 
 public class Main {
     public static void main(String[] args) {
-        BinaryMinHeap<Integer> h = new ArrayHeap<>(10, new IntegerComparator());
+        int maxSize = 200000;
+        Comparator<Integer> comparator = new IntegerComparator();
 
-        h.add(1);
-        h.add(2);
-        h.add(3);
-        h.add(4);
-        h.add(5);
-        h.add(6);
-        h.add(7);
-        h.add(8);
-        h.add(9);
-        h.add(10);
-        h.add(11);
-        h.add(12);
-        h.add(13);
-        h.add(14);
-        h.add(15);
-        h.add(16);
+        BinaryMinHeap<Integer> heap = new ArrayHeap<>(10, comparator);
+        PriorityQueueSorter<Integer> sorter = new PriorityQueueSorter<>(heap);
 
+//        BinaryMinHeap<Integer> heap = new TreeHeap<>(comparator);
+//        PriorityQueueSorter<Integer> sorter = new PriorityQueueSorter<>(heap);
 
+        Result result;
+        for (int size = 1; size < maxSize; size += size + 7) {
+            result = Tester.runNTimes(sorter, new RandomIntegerArrayGenerator(200), size, 20);
+            printResult(result, size, "Random");
 
+            result = Tester.runNTimes(sorter, new ShuffledIntegerArrayGenerator(), size, 20);
+            printResult(result, size, "Shuffled");
 
-        System.out.println(h);
-        System.out.println();
-        System.out.println(h.minimum());
-        System.out.println(h);
-//
-//        System.out.println(h.minimum());
-//        System.out.println(h);
+            result = Tester.runNTimes(sorter, new ReversedIntegerArrayGenerator(), size, 20);
+            printResult(result, size, "Reversed");
+
+            result = Tester.runNTimes(sorter, new OrderedIntegerArrayGenerator(), size, 20);
+            printResult(result, size, "Ordered");
+            System.out.println();
+            System.out.println();
+        }
+    }
+
+    public static void printResult(Result r, int size, String generator) {
+        System.out.println("Generator: " + generator + "\t\tSize: " + size + "\t\t" + r);
     }
 }
