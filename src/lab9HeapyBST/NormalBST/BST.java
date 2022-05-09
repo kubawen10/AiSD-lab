@@ -1,10 +1,12 @@
 package lab9HeapyBST.NormalBST;
 
+import lab9HeapyBST.Core.BSTInterface;
+
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
-public class BST<T> {
+public class BST<T> implements BSTInterface<T> {
     private final Comparator<T> comparator;
     private Node<T> root;
 

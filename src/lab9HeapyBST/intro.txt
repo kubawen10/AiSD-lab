@@ -1,4 +1,0 @@
-klucze jak bst
-priorytety jak kopiec
-
-priorytety losowe

@@ -1,26 +1,33 @@
 package lab9HeapyBST.HeapyBST;
 
-public class Node <T>{
+import java.util.Random;
+
+public class Node<T> {
+    private final int MAX_PRIORITY = 1000;
+
     private T value;
     private int priority;
 
     private Node<T> left;
     private Node<T> right;
 
-    public Node(T val){
-        value=val;
-    }
-
-    public Node(T val, Node<T> l, Node<T> r){
+    public Node(T val) {
         value = val;
-        left = l;
-        right = r;
-
-
+        priority = generatePriority();
     }
 
-    public String toString(){
-        return value.toString();
+    public Node(T val,int priority) {
+        value = val;
+        this.priority=priority;
+    }
+
+    public String toString() {
+        return "{" + value.toString() + " " + priority +"}";
+    }
+
+    public int generatePriority() {
+        Random random = new Random();
+        return random.nextInt(MAX_PRIORITY);
     }
 
     public T getValue() {
@@ -45,5 +52,19 @@ public class Node <T>{
 
     public void setRight(Node<T> right) {
         this.right = right;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public int comparePriorities(Node<T> other) {
+        if (priority - other.getPriority() >= 0) {
+            return 1;
+        } else return -1;
     }
 }
