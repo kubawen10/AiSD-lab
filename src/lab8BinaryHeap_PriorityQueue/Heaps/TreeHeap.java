@@ -36,7 +36,7 @@ public class TreeHeap<T> implements BinaryMinHeap<T> {
 
         currentlyStored++;
 
-        //could do as one function, time logn + logn -> logn
+
         addLast(element);
         bubbleUp(traversalOrderToPos(currentlyStored), root);
     }

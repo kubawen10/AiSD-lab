@@ -19,25 +19,38 @@ public class Main {
         int maxSize = 200000;
         Comparator<Integer> comparator = new IntegerComparator();
 
-        BinaryMinHeap<Integer> heap = new ArrayHeap<>(10, comparator);
-        PriorityQueueSorter<Integer> sorter = new PriorityQueueSorter<>(heap);
+        BinaryMinHeap<Integer> arrayHeap = new ArrayHeap<>(10, comparator);
+        BinaryMinHeap<Integer> treeHeap = new TreeHeap<>(comparator);
 
-//        BinaryMinHeap<Integer> heap = new TreeHeap<>(comparator);
-//        PriorityQueueSorter<Integer> sorter = new PriorityQueueSorter<>(heap);
+        PriorityQueueSorter<Integer> arraySorter = new PriorityQueueSorter<>(arrayHeap);
+        PriorityQueueSorter<Integer> treeSorter = new PriorityQueueSorter<>(treeHeap);
 
         Result result;
-        for (int size = 1; size < maxSize; size += size + 7) {
-            result = Tester.runNTimes(sorter, new RandomIntegerArrayGenerator(200), size, 20);
-            printResult(result, size, "Random");
+        for (int size = 2041; size < maxSize; size += size) {
+            result = Tester.runNTimes(arraySorter, new RandomIntegerArrayGenerator(200), size, 20);
+            printResult(result, size, "arrayRandom");
+            result = Tester.runNTimes(treeSorter, new RandomIntegerArrayGenerator(200), size, 20);
+            printResult(result, size, "treeRandom");
+            System.out.println();
 
-            result = Tester.runNTimes(sorter, new ShuffledIntegerArrayGenerator(), size, 20);
-            printResult(result, size, "Shuffled");
+            result = Tester.runNTimes(arraySorter, new ShuffledIntegerArrayGenerator(), size, 20);
+            printResult(result, size, "arrayShuffled");
+            result = Tester.runNTimes(treeSorter, new ShuffledIntegerArrayGenerator(), size, 20);
+            printResult(result, size, "treeShuffled");
+            System.out.println();
 
-            result = Tester.runNTimes(sorter, new ReversedIntegerArrayGenerator(), size, 20);
-            printResult(result, size, "Reversed");
+            result = Tester.runNTimes(arraySorter, new ReversedIntegerArrayGenerator(), size, 20);
+            printResult(result, size, "arrayReversed");
+            result = Tester.runNTimes(treeSorter, new ReversedIntegerArrayGenerator(), size, 20);
+            printResult(result, size, "treeReversed");
+            System.out.println();
 
-            result = Tester.runNTimes(sorter, new OrderedIntegerArrayGenerator(), size, 20);
-            printResult(result, size, "Ordered");
+            result = Tester.runNTimes(arraySorter, new OrderedIntegerArrayGenerator(), size, 20);
+            printResult(result, size, "arrayOrdered");
+            result = Tester.runNTimes(treeSorter, new OrderedIntegerArrayGenerator(), size, 20);
+            printResult(result, size, "treeOrdered");
+
+
             System.out.println();
             System.out.println();
         }
