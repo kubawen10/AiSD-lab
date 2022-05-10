@@ -26,6 +26,6 @@ public class Result {
     }
 
     public String toString(){
-        return "Avg time: " + avgTime + " StdDev: " + timeStdDev;
+        return String.format("Avg time: %.2f Std Dev: %.2f", avgTime, timeStdDev);
     }
 }

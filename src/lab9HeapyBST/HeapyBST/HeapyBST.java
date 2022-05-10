@@ -16,6 +16,10 @@ public class HeapyBST<T> implements BSTInterface<T> {
     }
 
 
+    public void clear(){
+        root = null;
+    }
+
     //finding
     public T find(T value) {
         Node<T> node = searchNode(value);

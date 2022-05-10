@@ -15,6 +15,11 @@ public class BST<T> implements BSTInterface<T> {
         root = null;
     }
 
+    @Override
+    public void clear(){
+        root = null;
+    }
+
     public T find(T value) {
         Node<T> n = search(value);
         return n == null ? null : n.getValue();
@@ -62,52 +67,40 @@ public class BST<T> implements BSTInterface<T> {
         }
     }
 
-    public void delete(T elem) {
-        Node<T> deleteElement = search(elem);
+    public void delete(T elem){
+        Node<T> x;
+        Node<T> y;
+        Node<T> z = search(elem);
 
-        if (deleteElement == null) throw new NoSuchElementException();
-
-        Node<T> parent = deleteElement.getParent();
-
-        //both right and left are nulls
-        if (deleteElement.getLeft() == null && deleteElement.getRight() == null) {
-            ensureParent(deleteElement, null);
-        }
-        //left is null and right isnt
-        else if (deleteElement.getLeft() == null && deleteElement.getRight() != null) {
-            ensureParent(deleteElement, deleteElement.getRight());
-        }
-        //left isnt null and right is
-        else if (deleteElement.getLeft() != null && deleteElement.getRight() == null) {
-            ensureParent(deleteElement, deleteElement.getLeft());
-        } else {
-            //left and
-            Node<T> successor = getSuccessorNode(deleteElement);
-
-            successor.setLeft(deleteElement.getLeft());
-
-            if (successor.getParent() != deleteElement) {
-                successor.getParent().setLeft(successor.getRight());
-                successor.setRight(deleteElement.getRight());
-            }
-
-            ensureParent(deleteElement, successor);
-        }
-    }
-
-    private void ensureParent(Node<T> deleteElement, Node<T> n) {
-        Node<T> parent = deleteElement.getParent();
-
-        if (parent == null) {
-            root = n;
-        } else {
-            if (deleteElement == parent.getLeft()) {
-                parent.setLeft(n);
-            } else {
-                parent.setRight(n);
-            }
+        if(z.getRight()==null || z.getLeft()==null){
+            y=z;
+        }else{
+            y=getSuccessorNode(z);
         }
 
+        if(y.getLeft()!=null){
+            x=y.getLeft();
+        }else{
+            x=y.getRight();
+        }
+
+        if (x!=null){
+            x.setParent(y.getParent());
+        }
+
+        if(y.getParent()==null){
+            root = x;
+        }else if(y==y.getParent().getLeft()){
+            y.getParent().setLeft(x);
+        }else{
+            y.getParent().setRight(x);
+        }
+
+        if(y!=z){
+            T temp = y.getValue();
+            y.setValue(z.getValue());
+            z.setValue(temp);
+        }
     }
 
     public T getSuccessor(T value) {
@@ -225,7 +218,10 @@ public class BST<T> implements BSTInterface<T> {
             }
         }
 
-        return s.substring(0, s.length() - 1);
+        if (s.length()>0){
+            return s.substring(0, s.length()-1);
+        }
+        return s.toString();
     }
 
     public int countNodes() {
