@@ -16,7 +16,7 @@ public class HeapyBST<T> implements BSTInterface<T> {
     }
 
 
-    public void clear(){
+    public void clear() {
         root = null;
     }
 
@@ -41,7 +41,7 @@ public class HeapyBST<T> implements BSTInterface<T> {
 
     //inserting
     public void insert(T value) {
-        if(value==null){
+        if (value == null) {
             throw new NullPointerException();
         }
 
@@ -59,13 +59,13 @@ public class HeapyBST<T> implements BSTInterface<T> {
             n.setLeft(insertWithSwap(n.getLeft(), value));
 
             if (n.comparePriorities(n.getLeft()) < 0) {
-                return rotateRight(n.getLeft(), n);
+                return rotateRight(n);
             }
         } else if (cmp > 0) {
             n.setRight(insertWithSwap(n.getRight(), value));
 
             if (n.comparePriorities(n.getRight()) < 0) {
-                return rotateLeft(n, n.getRight());
+                return rotateLeft(n);
             }
         } else {
             throw new UnsupportedOperationException();
@@ -74,18 +74,22 @@ public class HeapyBST<T> implements BSTInterface<T> {
         return n;
     }
 
-    private Node<T> rotateRight(Node<T> l, Node<T> r) {
-        r.setLeft(l.getRight());
-        l.setRight(r);
+    private Node<T> rotateRight(Node<T> n) {
+        Node<T> child = n.getLeft();
 
-        return l;
+        n.setLeft(child.getRight());
+        child.setRight(n);
+
+        return child;
     }
 
-    private Node<T> rotateLeft(Node<T> l, Node<T> r) {
-        l.setRight(r.getLeft());
-        r.setLeft(l);
+    private Node<T> rotateLeft(Node<T> n) {
+        Node<T> child = n.getRight();
 
-        return r;
+        n.setRight(child.getLeft());
+        child.setLeft(n);
+
+        return child;
     }
 
 
@@ -110,14 +114,27 @@ public class HeapyBST<T> implements BSTInterface<T> {
             if (n.getLeft() == null && n.getRight() == null) {
                 return null;
             }
-            //left isnt null and right is (by rotating right n will be a leaf)
-            else if(n.getLeft()!=null && n.getRight()==null){
-                return delete(rotateRight(n.getLeft(), n), value);
-            }else{//left is null and right isnt or both arent nulls
-                return delete(rotateLeft(n, n.getRight()), value);
+            //left isnt null and right is (by rotating right n will be a leaf) or leftPrio>rightPrio
+            if (n.getLeft() != null && n.getRight() == null) {
+                return delete(rotateRight(n), value);
+            }
+            //left is null and right isnt or leftPrio<=rightPrio
+            if (n.getLeft() == null && n.getRight() != null) {
+                return delete(rotateLeft(n), value);
+            }
+            //both arent nulls
+            else {
+                int leftPrio = n.getLeft().getPriority();
+                int rightPrio = n.getRight().getPriority();
+
+                if(rightPrio>leftPrio){
+                    return delete(rotateLeft(n), value);
+                }
+                else{
+                    return delete(rotateRight(n), value);
+                }
             }
         }
-
         return n;
     }
 
