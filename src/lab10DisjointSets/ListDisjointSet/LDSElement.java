@@ -2,8 +2,6 @@ package lab10DisjointSets.ListDisjointSet;
 
 import lab10DisjointSets.SetElement;
 
-import java.util.Objects;
-
 public class LDSElement extends SetElement {
     private LDSElement representative;
     private LDSElement next;
@@ -53,13 +51,5 @@ public class LDSElement extends SetElement {
         return "LDSElement{" +
                 "length=" + length +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        LDSElement that = (LDSElement) o;
-        return length == that.length && Objects.equals(representative, that.representative) && Objects.equals(next, that.next) && Objects.equals(last, that.last);
     }
 }

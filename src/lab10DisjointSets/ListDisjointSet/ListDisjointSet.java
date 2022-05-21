@@ -3,11 +3,9 @@ package lab10DisjointSets.ListDisjointSet;
 import lab10DisjointSets.DisjointSet;
 import lab10DisjointSets.SetElement;
 
-
 public class ListDisjointSet implements DisjointSet {
     public ListDisjointSet() {
     }
-
 
     @Override
     public SetElement makeSet() {
@@ -17,41 +15,40 @@ public class ListDisjointSet implements DisjointSet {
     @Override
     public SetElement union(SetElement x, SetElement y) {
         //cast :( how to change it?
-        LDSElement r1 = ((LDSElement) x).getRepresentative();
-        LDSElement r2 = ((LDSElement) y).getRepresentative();
+        LDSElement repr1 = cast(x);
+        LDSElement repr2 = cast(y);
 
-        //setting r1 set to be longer than r2 set
-        if (r1.getLength() < r2.getLength()) {
-            LDSElement temp = r1;
-            r1 = r2;
-            r2 = temp;
+        //setting repr1 set to be longer than repr2 set
+        if (repr1.getLength() < repr2.getLength()) {
+            LDSElement temp = repr1;
+            repr1 = repr2;
+            repr2 = temp;
         }
 
-        r1.getLast().setNext(r2);
-        r1.setLast(r2.getLast());
+        //connect repr1 set and repr2set
+        repr1.getLast().setNext(repr2);
+        repr1.setLast(repr2.getLast());
+        repr1.setLength(repr1.getLength() + repr2.getLength());
 
-        r1.setLength(r1.getLength() + r2.getLength());
-        while (r2 != null) {
-            r2.setRepresentative(r1);
-            r2 = r2.getNext();
+        //set representative of repr2 set to repr1 (iteration over set2 elements)
+        while (repr2 != null) {
+            repr2.setRepresentative(repr1);
+            repr2 = repr2.getNext();
         }
 
-
-        return r1;
+        return repr1;
     }
 
     @Override
     public SetElement findSet(SetElement x) {
-        return ((LDSElement) x).getRepresentative();
+        return cast(x).getRepresentative();
     }
 
-    @Override
-    public void printSet(SetElement x) {
-        if(x==null){
-            System.out.println("null");
-            return;
+    private LDSElement cast(SetElement x){
+        if(x instanceof  LDSElement){
+            return (LDSElement) x;
         }
-        LDSElement r = ((LDSElement) x).getRepresentative();
-        System.out.println(r);
+
+        throw new ClassCastException();
     }
 }
