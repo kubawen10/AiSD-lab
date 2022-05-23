@@ -1,8 +1,6 @@
 package lab10DisjointSets;
 
-import lab10DisjointSets.ForestDisjointSet.FDSElement;
 import lab10DisjointSets.ForestDisjointSet.ForestDisjointSet;
-import lab10DisjointSets.ListDisjointSet.LDSElement;
 import lab10DisjointSets.ListDisjointSet.ListDisjointSet;
 
 import java.time.Duration;
@@ -10,82 +8,52 @@ import java.time.Instant;
 
 public class Main {
     public static void main(String[] args) {
-        testLDS();
-        testFDS();
-    }
-
-    public static void testFDS(){
-        System.out.println("FDS test");
-        DisjointSet lds = new ForestDisjointSet();
-
-        SetElement s1 = lds.makeSet();
-        SetElement s2 = lds.makeSet();
-
-
-        //making set of n elements: n*O(1)
-        for (int i = 0; i < 10000000; i++) {
-            if (i == 4567) {
-                s2 = lds.makeSet();
-                lds.union(s1, s2);
-            }
-
-            lds.union(s1, lds.makeSet());
-        }
-        //s1 and s2 are in same set, s1 is representative of this set
-        System.out.println(s1 == lds.findSet(s2));
-
-        //making another set of 10000 elements
-        SetElement s3 = lds.makeSet();
-        for (int i = 0; i < 10000000; i++) {
-            lds.union(s3, lds.makeSet());
-        }
-
-        //both sets arnt united
-        System.out.println("United? " + (lds.findSet(s3) == lds.findSet(s1)));
-
-        Instant start = Instant.now();
-        s1 = lds.union(s1, s3);
-        Instant end = Instant.now();
-        System.out.println(Duration.between(start, end).toMillis());
-    }
-
-    public static void testLDS(){
         System.out.println("LDS test");
         DisjointSet lds = new ListDisjointSet();
+        testSet(lds);
 
-        SetElement s1 = lds.makeSet();
-        SetElement s2 = lds.makeSet();
+        System.out.println("\nFDS test");
+        DisjointSet fds = new ForestDisjointSet();
+        testSet(fds);
+    }
+
+    public static void testSet(DisjointSet set){
+        SetElement s1 = set.makeSet();
+        SetElement s2 = set.makeSet();
 
 
+        System.out.println("Start adding and union with s1");
         //making set of n elements: n*O(1)
+
         for (int i = 0; i < 10000000; i++) {
             if (i == 4567) {
-                s2 = lds.makeSet();
-                lds.union(s1, s2);
+                s2 = set.makeSet();
+                set.union(s1, s2);
             }
-
-            lds.union(s1, lds.makeSet());
+            set.union(s1, set.makeSet());
         }
-        //s1 and s2 are in same set, s1 is representative of this set
-        System.out.println("Same set? " + (s1 == lds.findSet(s2)));
+        System.out.println("Stop adding");
 
-        //check length of set
-        System.out.println(((LDSElement) s1).getLength());
+        //s1 and s2 are in same set, s1 is representative of this set
+        System.out.println("s1 and s2 are same set (should be true) test: " + (set.findSet(s1) == set.findSet(s2)));
 
         //making another set of 10000 elements
-        SetElement s3 = lds.makeSet();
-        for (int i = 0; i < 10000000; i++) {
-            lds.union(s3, lds.makeSet());
+        SetElement s3 = set.makeSet();
+        System.out.println("Create new set s3");
+        for (int i = 0; i < 10000001; i++) {
+            set.union(s3, set.makeSet());
         }
 
         //both sets arnt united
-        System.out.println("United? " + (lds.findSet(s3) == lds.findSet(s1)));
+        System.out.println("s1 and s3 united? (should be false): " + (set.findSet(s3) == set.findSet(s1)));
 
+
+        System.out.println("Start union");
         Instant start = Instant.now();
-        s1 = lds.union(s1, s3);
+        set.union(s1, s3);
         Instant end = Instant.now();
-        System.out.println(Duration.between(start, end).toMillis());
-
-        System.out.println(((LDSElement) s1).getLength());
+        System.out.println("End union");
+        System.out.println("Union time: " + Duration.between(start, end).toMillis());
+        System.out.println("s1 and s3 united? (should be true): " + (set.findSet(s3) == set.findSet(s1)));
     }
 }

@@ -14,7 +14,6 @@ public class ListDisjointSet implements DisjointSet {
 
     @Override
     public SetElement union(SetElement x, SetElement y) {
-        //cast :( how to change it?
         LDSElement repr1 = cast(x);
         LDSElement repr2 = cast(y);
 
@@ -25,7 +24,7 @@ public class ListDisjointSet implements DisjointSet {
             repr2 = temp;
         }
 
-        //connect repr1 set and repr2set
+        //connect repr1 set and repr2 set
         repr1.getLast().setNext(repr2);
         repr1.setLast(repr2.getLast());
         repr1.setLength(repr1.getLength() + repr2.getLength());

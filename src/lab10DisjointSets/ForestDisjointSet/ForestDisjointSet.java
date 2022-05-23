@@ -14,25 +14,28 @@ public class ForestDisjointSet implements DisjointSet {
 
     @Override
     public SetElement union(SetElement x, SetElement y) {
-        FDSElement repr1 = privFindSet(cast(x));
-        FDSElement repr2 = privFindSet(cast(y));
+        SetElement repr1 = findSet(x);
+        SetElement repr2 = findSet(y);
 
         return link(repr1, repr2);
     }
 
-    private SetElement link(FDSElement repr1, FDSElement repr2) {
-        int rank1 = repr1.getRank();
-        int rank2 = repr2.getRank();
+    private SetElement link(SetElement repr1, SetElement repr2) {
+        FDSElement r1 = cast(repr1);
+        FDSElement r2 = cast(repr2);
+
+        int rank1 = r1.getRank();
+        int rank2 = r2.getRank();
 
         if (rank1 > rank2) {
-            repr2.setParent(repr1);
+            r2.setParent(r1);
 
             return repr1;
         } else {
-            repr1.setParent(repr2);
+            r1.setParent(r2);
 
             if (rank1 == rank2) {
-                repr2.setRank(rank2 + 1);
+                r2.setRank(rank2 + 1);
             }
 
             return repr2;
@@ -41,10 +44,11 @@ public class ForestDisjointSet implements DisjointSet {
 
     @Override
     public SetElement findSet(SetElement x) {
-        return privFindSet(cast(x));
+        return privFindSet(x);
     }
 
-    private FDSElement privFindSet(FDSElement x) {
+    private FDSElement privFindSet(SetElement y) {
+        FDSElement x =  cast(y);
         if (x != x.getParent()) {
             x.setParent(privFindSet(x.getParent()));
         }
