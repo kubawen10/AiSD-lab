@@ -6,7 +6,6 @@ import lab10DisjointSets.ListDisjointSet.ListDisjointSet;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.LinkedList;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {

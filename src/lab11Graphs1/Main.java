@@ -1,11 +1,17 @@
 package lab11Graphs1;
 
+import lab11Graphs1.Loader.Loader;
+import lab11Graphs1.Loader.MalformedGraphDescriptionException;
 import lab11Graphs1.WeightedGraph.AdjacencyListWeightedDigraph;
 import lab11Graphs1.WeightedGraph.AdjacencyMatrixWeightedDigraph;
 import lab11Graphs1.WeightedGraph.IWeightedDigraph;
 
 public class Main {
-    public static void main(String[] args) {
+    private static String path = "src/lab11Graphs1/Files/";
+
+    public static void main(String[] args) throws MalformedGraphDescriptionException {
+
+
         System.out.println("General tests for matrix");
         AdjacencyMatrixWeightedDigraph matrix = new AdjacencyMatrixWeightedDigraph(5);
         //testGeneral(matrix);
@@ -17,12 +23,39 @@ public class Main {
 
         System.out.println("Conversions test");
         //conversions test
-        testConversions();
+        //testConversions();
 
-
+        testLoading();
     }
 
-    public static void testConversions(){
+    public static void testLoading() {
+        AdjacencyMatrixWeightedDigraph matrix;
+        System.out.println("Empty file");
+        matrix = Loader.matrixGraphLoader(path + "emptyFile.txt");
+        System.out.println(matrix);
+
+        System.out.println("\nEmpty graph");
+        matrix = Loader.matrixGraphLoader(path + "emptyGraph.txt");
+        System.out.println(matrix);
+
+        System.out.println("\nWrong first line");
+        matrix = Loader.matrixGraphLoader(path + "wrongFirstLine.txt");
+        System.out.println(matrix);
+
+        System.out.println("\nWrong undirected arg");
+        matrix = Loader.matrixGraphLoader(path + "wrongUArg.txt");
+        System.out.println(matrix);
+
+        System.out.println("\nWrong vertex arg");
+        matrix = Loader.matrixGraphLoader(path + "wrongVertexArg.txt");
+        System.out.println(matrix);
+
+        System.out.println("\nProper file");
+        matrix = Loader.matrixGraphLoader(path + "properFile.txt");
+        System.out.println(matrix);
+    }
+
+    public static void testConversions() {
         AdjacencyListWeightedDigraph list = new AdjacencyListWeightedDigraph(5);
         System.out.println("Empty list to matrix: ");
         Converter converter = new Converter();
@@ -40,7 +73,7 @@ public class Main {
         System.out.println(matrix);
 
         System.out.println("Empty matrix to list");
-        matrix=new AdjacencyMatrixWeightedDigraph(5);
+        matrix = new AdjacencyMatrixWeightedDigraph(5);
         System.out.println(matrix);
         list = converter.convert(matrix);
         System.out.println(list);
