@@ -5,19 +5,23 @@ import lab10DisjointSets.ListDisjointSet.ListDisjointSet;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("LDS test");
         DisjointSet lds = new ListDisjointSet();
-        testSet(lds);
+        //testSet(lds);
 
         System.out.println("\nFDS test");
         DisjointSet fds = new ForestDisjointSet();
-        testSet(fds);
+        //testSet(fds);
+
+        testAdding(10000000, lds);
     }
 
-    public static void testSet(DisjointSet set){
+    public static void testSet(DisjointSet set) {
         SetElement s1 = set.makeSet();
         SetElement s2 = set.makeSet();
 
@@ -55,5 +59,27 @@ public class Main {
         System.out.println("End union");
         System.out.println("Union time: " + Duration.between(start, end).toMillis());
         System.out.println("s1 and s3 united? (should be true): " + (set.findSet(s3) == set.findSet(s1)));
+    }
+
+    public static void testAdding(int maxNum, DisjointSet set) {
+
+        SetElement s1 = set.makeSet();
+
+        Instant start = Instant.now();
+        LinkedList<Instant> times = new LinkedList<>();
+        for (int i = 1; i < maxNum; i++) {
+            set.union(s1, set.makeSet());
+            if (i % 500000 == 0) {
+                times.addLast(Instant.now());
+            }
+        }
+
+
+        System.out.println("eo");
+        int count = 0;
+        for (int i = 500000; i < maxNum; i += 500000) {
+            System.out.println("union of: " + i + " elements, time: " + Duration.between(start, times.get(count)).toMillis());
+            count++;
+        }
     }
 }
