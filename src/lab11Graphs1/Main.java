@@ -10,8 +10,6 @@ public class Main {
     private static String path = "src/lab11Graphs1/Files/";
 
     public static void main(String[] args) throws MalformedGraphDescriptionException {
-
-
         System.out.println("General tests for matrix");
         AdjacencyMatrixWeightedDigraph matrix = new AdjacencyMatrixWeightedDigraph(5);
         //testGeneral(matrix);
@@ -22,10 +20,10 @@ public class Main {
 
 
         System.out.println("Conversions test");
-        //conversions test
         //testConversions();
 
-        testLoading();
+        System.out.println("Loading test");
+        //testLoading();
     }
 
     public static void testLoading() {
