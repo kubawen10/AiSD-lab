@@ -1,5 +1,8 @@
 package lab11Graphs1.WeightedGraph;
 
+import lab11Graphs1.Iterators.WeightedEdge;
+
+import java.util.Iterator;
 import java.util.List;
 
 public interface IWeightedDigraph {
@@ -31,4 +34,7 @@ public interface IWeightedDigraph {
 	
 	void setWeight(int u, int v, double w); 		// Sets the weight of the directed edge (u, v).
 												// If there is no such edge, does nothing.
+
+	//modification
+	Iterator<WeightedEdge> edges(int v);		//
 }

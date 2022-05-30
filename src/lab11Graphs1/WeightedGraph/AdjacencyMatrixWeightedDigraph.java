@@ -1,6 +1,10 @@
 package lab11Graphs1.WeightedGraph;
 
+import lab11Graphs1.Iterators.MatrixWeightedGraphIterator;
+import lab11Graphs1.Iterators.WeightedEdge;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class AdjacencyMatrixWeightedDigraph implements IWeightedDigraph {
@@ -12,13 +16,8 @@ public class AdjacencyMatrixWeightedDigraph implements IWeightedDigraph {
         for (int i = 0; i < numberOfVertices; i++) {
             ArrayList<Double> curVertex = new ArrayList<>(numberOfVertices);
             for (int j = 0; j < numberOfVertices; j++) {
-                if (i == j) {
-                    curVertex.add((double) 0);
-                } else {
-                    curVertex.add(Double.POSITIVE_INFINITY);
-                }
+                curVertex.add(Double.POSITIVE_INFINITY);
             }
-
             adjList.add(curVertex);
         }
     }
@@ -31,7 +30,7 @@ public class AdjacencyMatrixWeightedDigraph implements IWeightedDigraph {
             ArrayList<Double> curVertex = adjList.get(i);
 
             for (int j = 0; j < curVertex.size(); j++) {
-                if (i != j && curVertex.get(j) != Double.POSITIVE_INFINITY) {
+                if (curVertex.get(j) != Double.POSITIVE_INFINITY) {
                     sum++;
                 }
             }
@@ -59,7 +58,7 @@ public class AdjacencyMatrixWeightedDigraph implements IWeightedDigraph {
 
     @Override
     public boolean addEdgeU(int u, int v, double w) {
-        if (u == v || !vertexInBounds(u) || !vertexInBounds(v)) return false;
+        if (!vertexInBounds(u) || !vertexInBounds(v)) return false;
 
         //if there is only one arc return false
         if (!hasEdge(u, v) && !hasEdge(v, u)) {
@@ -70,7 +69,7 @@ public class AdjacencyMatrixWeightedDigraph implements IWeightedDigraph {
 
     @Override
     public boolean removeEdge(int u, int v) {
-        if (vertexInBounds(u) && vertexInBounds(v) && u != v) {
+        if (vertexInBounds(u) && vertexInBounds(v)) {
             if (weight(u, v) != Double.POSITIVE_INFINITY) {
                 adjList.get(u).set(v, Double.POSITIVE_INFINITY);
                 return true;
@@ -111,7 +110,7 @@ public class AdjacencyMatrixWeightedDigraph implements IWeightedDigraph {
         List<Double> adjVertices = adjList.get(v);
 
         for (int i = 0; i < adjVertices.size(); i++) {
-            if (adjVertices.get(i) != Double.POSITIVE_INFINITY && i != v) {
+            if (adjVertices.get(i) != Double.POSITIVE_INFINITY) {
                 vertices.add(i);
             }
         }
@@ -127,9 +126,16 @@ public class AdjacencyMatrixWeightedDigraph implements IWeightedDigraph {
 
     @Override
     public void setWeight(int u, int v, double w) {
-        if (vertexInBounds(u) && vertexInBounds(v) && adjList.get(u).get(v) != Double.POSITIVE_INFINITY && u != v) {
+        if (vertexInBounds(u) && vertexInBounds(v) && adjList.get(u).get(v) != Double.POSITIVE_INFINITY) {
             adjList.get(u).set(v, w);
         }
+    }
+
+    @Override
+    public Iterator<WeightedEdge> edges(int v) {
+        ArrayList<Double> adj = adjList.get(v);
+
+        return new MatrixWeightedGraphIterator(v, adj);
     }
 
     @Override

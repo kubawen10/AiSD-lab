@@ -1,10 +1,11 @@
 package lab11Graphs1;
 
+import lab11Graphs1.Iterators.WeightedEdge;
 import lab11Graphs1.Loader.Loader;
 import lab11Graphs1.Loader.MalformedGraphDescriptionException;
-import lab11Graphs1.WeightedGraph.AdjacencyListWeightedDigraph;
-import lab11Graphs1.WeightedGraph.AdjacencyMatrixWeightedDigraph;
-import lab11Graphs1.WeightedGraph.IWeightedDigraph;
+import lab11Graphs1.WeightedGraph.*;
+
+import java.util.Iterator;
 
 public class Main {
     private static String path = "src/lab11Graphs1/Files/";
@@ -23,7 +24,32 @@ public class Main {
         //testConversions();
 
         System.out.println("Loading test");
-        //testLoading();
+        testLoading();
+
+
+        System.out.println("Iterators test");
+        //list iterator
+        AdjacencyListWeightedDigraph l = new AdjacencyListWeightedDigraph(5);
+        l.addEdgeU(1,3,5);
+        l.addEdge(1,4,3);
+        l.addEdge(1,2,3);
+        System.out.println(l);
+        Iterator<WeightedEdge> it = l.edges(1);
+        while(it.hasNext()){
+            System.out.println(it.next());
+        }
+
+        //matrix iterator
+        AdjacencyMatrixWeightedDigraph m = new AdjacencyMatrixWeightedDigraph(5);
+        m.addEdgeU(1,3,5);
+        m.addEdge(1,4,3);
+        m.addEdge(1,2,3);
+        System.out.println(m);
+        Iterator<WeightedEdge> itt = m.edges(1);
+        while(itt.hasNext()){
+            System.out.println(itt.next());
+        }
+
     }
 
     public static void testLoading() {

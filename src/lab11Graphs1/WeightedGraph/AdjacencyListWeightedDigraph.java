@@ -1,34 +1,11 @@
 package lab11Graphs1.WeightedGraph;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import lab11Graphs1.Iterators.ListWeightedGraphIterator;
+import lab11Graphs1.Iterators.WeightedEdge;
+
+import java.util.*;
 
 public class AdjacencyListWeightedDigraph implements IWeightedDigraph {
-    class WeightedArc {
-        int toVertex;
-        double weight;
-
-        WeightedArc(int toVertex, double weight) {
-            this.toVertex = toVertex;
-            this.weight = weight;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            WeightedArc that = (WeightedArc) o;
-            return toVertex == that.toVertex;
-        }
-
-        @Override
-        public String toString() {
-            return "(to: " + toVertex + " w: " + weight + ")";
-        }
-    }
-
     private ArrayList<LinkedList<WeightedArc>> adjList;
 
     public AdjacencyListWeightedDigraph(int numberOfVertices) {
@@ -56,7 +33,7 @@ public class AdjacencyListWeightedDigraph implements IWeightedDigraph {
 
     @Override
     public boolean addEdge(int u, int v, double w) {
-        if (u == v || !vertexInBounds(u) || !vertexInBounds(v)) return false;
+        if (!vertexInBounds(u) || !vertexInBounds(v)) return false;
 
         if (!hasEdge(u, v)) {
             adjList.get(u).add(new WeightedArc(v, w));
@@ -95,8 +72,6 @@ public class AdjacencyListWeightedDigraph implements IWeightedDigraph {
 
     @Override
     public boolean hasEdge(int u, int v) {
-        if (u == v) return true;
-
         if (!vertexInBounds(u) || !vertexInBounds(v)) return false;
 
         WeightedArc arc = new WeightedArc(v, 0);
@@ -128,8 +103,6 @@ public class AdjacencyListWeightedDigraph implements IWeightedDigraph {
 
     @Override
     public double weight(int u, int v) {
-        if (u == v) return 0;
-
         WeightedArc arc = getArc(u, v);
 
         if (arc != null) {
@@ -146,6 +119,11 @@ public class AdjacencyListWeightedDigraph implements IWeightedDigraph {
         if (arc != null) {
             arc.weight = w;
         }
+    }
+
+    @Override
+    public Iterator<WeightedEdge> edges(int v) {
+        return new ListWeightedGraphIterator(v, adjList.get(v));
     }
 
     private WeightedArc getArc(int u, int v) {

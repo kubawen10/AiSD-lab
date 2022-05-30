@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Loader {
-    public static AdjacencyMatrixWeightedDigraph matrixGraphLoader(String path){
+    public static AdjacencyMatrixWeightedDigraph matrixGraphLoader(String path) {
         ArrayList<String> lines = loadLines(path);
         AdjacencyMatrixWeightedDigraph graph = null;
         try {
@@ -70,7 +70,7 @@ public class Loader {
                     u = parseVertex(args[0], i + 1);
                     v = parseVertex(args[1], i + 1);
                     w = parseWeight(args[2], i + 1);
-                    loadToGraph(undirected, u, v, w, graph);
+                    loadToGraph(undirected, u, v, w, graph, i + 1);
                 } catch (MalformedGraphDescriptionException e) {
                     System.out.println(e);
                 }
@@ -85,11 +85,16 @@ public class Loader {
     }
 
     //adding arc to graph, if args arent correct it is handled by graph itself
-    private static void loadToGraph(boolean undirected, int u, int v, double w, IWeightedDigraph graph) {
+    private static void loadToGraph(boolean undirected, int u, int v, double w, IWeightedDigraph graph, int line) throws MalformedGraphDescriptionException {
+        boolean added;
         if (undirected) {
-            graph.addEdgeU(u, v, w);
+            added = graph.addEdgeU(u, v, w);
         } else {
-            graph.addEdge(u, v, w);
+            added = graph.addEdge(u, v, w);
+        }
+
+        if (!added) {
+            throw new MalformedGraphDescriptionException("Couldn't add edge. ", line);
         }
     }
 
