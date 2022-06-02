@@ -15,16 +15,7 @@ public class MatrixWeightedGraphIterator implements Iterator<WeightedEdge> {
 
     @Override
     public boolean hasNext() {
-        int from;
-
-        if (curPos == -1) {
-            from = 0;
-        } else {
-            from = curPos + 1;
-        }
-
-        System.out.println("from: " + from);
-        for (int i = from; i < adj.size(); i++) {
+        for (int i = curPos + 1; i < adj.size(); i++) {
             if (adj.get(i) != Double.POSITIVE_INFINITY) {
                 return true;
             }
@@ -35,7 +26,6 @@ public class MatrixWeightedGraphIterator implements Iterator<WeightedEdge> {
 
     private void setNext() {
         for (int i = curPos + 1; i < adj.size(); i++) {
-
             if (adj.get(i) != Double.POSITIVE_INFINITY) {
                 curPos = i;
                 return;

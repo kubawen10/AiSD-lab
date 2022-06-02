@@ -24,7 +24,7 @@ public class Main {
         //testConversions();
 
         System.out.println("Loading test");
-        testLoading();
+        //testLoading();
 
 
         System.out.println("Iterators test");
