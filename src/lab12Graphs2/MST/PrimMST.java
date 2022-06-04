@@ -32,26 +32,29 @@ public class PrimMST extends MST {
         }
 
         //init distances, vertex 0 is source
-        ArrayList<Double> distances = new ArrayList<>(graph.vertexCount());
-        distances.add(0.0);
+        ArrayList<WeightFrom> distances = new ArrayList<>(graph.vertexCount());
+        distances.add(new WeightFrom(0.0, -1));
         for (int i = 1; i < graph.vertexCount(); i++) {
             if (graph.hasEdge(0, i)) {
-                distances.add(graph.weight(0, i));
+                distances.add(new WeightFrom(graph.weight(0, i), 0));
             } else {
-                distances.add(Double.POSITIVE_INFINITY);
+                distances.add(new WeightFrom(Double.POSITIVE_INFINITY, -1));
             }
         }
 
         while (sets.get(0).getLength() != graph.vertexCount()) {
             WeightedEdge minimalEdge = findMinimalEdge(distances);
+            returnGraph.addEdgeU(minimalEdge.beginning, minimalEdge.end, minimalEdge.weight);
+            set.union(sets.get(0), sets.get(minimalEdge.end));
 
+            updateDistances(distances, minimalEdge.end, graph);
         }
 
 
         return returnGraph;
     }
 
-    private WeightedEdge findMinimalEdge(ArrayList<Double> distances) {
+    private WeightedEdge findMinimalEdge(ArrayList<WeightFrom> distances) {
         double minDist = Double.POSITIVE_INFINITY;
         int from = -1;
         int to = -1;
@@ -62,17 +65,22 @@ public class PrimMST extends MST {
 
             //if curent vertex hasnt been added to set
             if (!source.equals(set.findSet(cur))) {
-                double dist = distances.get(i);
+                double dist = distances.get(i).getWeight();
                 if (dist < minDist) {
                     minDist = dist;
+                    from = distances.get(i).getFrom();
                     to = i;
                 }
             }
         }
-        if (to == -1) return null;
+        if(from == -1 || to ==-1){
+            System.out.println("Graph is not consisten");
+            throw new IndexOutOfBoundsException();
+        }
+        return new WeightedEdge(from, to, minDist);
     }
 
-    private void updateDistances(ArrayList<Double> distances, int from, IWeightedDigraph graph) {
+    private void updateDistances(ArrayList<WeightFrom> distances, int from, IWeightedDigraph graph) {
         LDSElement<Integer> source = sets.get(0);
         List<Integer> connected = graph.verticesConnectedTo(from);
 
@@ -80,7 +88,17 @@ public class PrimMST extends MST {
             int cur = connected.get(i);
 
             if (!source.equals(set.findSet(sets.get(cur)))) {
-                distances.set(cur, Math.min(distances.get(cur), graph.weight(from, cur)));
+                double curWeight = distances.get(cur).getWeight();
+                double newWeight = graph.weight(from, cur);
+                if (newWeight < curWeight) {
+                    distances.set(cur, new WeightFrom(newWeight, from));
+                }
+                //this is just to make it alphabetical order (G1 explains)
+                else if (newWeight == curWeight) {
+                    if (from < distances.get(cur).getFrom()) {
+                        distances.set(cur, new WeightFrom(newWeight, from));
+                    }
+                }
             }
         }
 

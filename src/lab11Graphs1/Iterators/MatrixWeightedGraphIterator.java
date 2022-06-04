@@ -32,14 +32,12 @@ public class MatrixWeightedGraphIterator implements Iterator<WeightedEdge> {
             }
         }
 
-        curPos = adj.size() + 1;
+        curPos = adj.size();
     }
 
     @Override
     public WeightedEdge next() {
         setNext();
-
-        System.out.println("cur Pos : " + curPos);
         return new WeightedEdge(v, curPos, adj.get(curPos));
     }
 }
