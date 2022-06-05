@@ -1,6 +1,8 @@
 package lab12Graphs2;
 
+import lab11Graphs1.Converter;
 import lab11Graphs1.Loader.Loader;
+import lab11Graphs1.WeightedGraph.AdjacencyListWeightedDigraph;
 import lab11Graphs1.WeightedGraph.IWeightedDigraph;
 import lab12Graphs2.MST.KruskalMST;
 import lab12Graphs2.MST.MST;
@@ -15,9 +17,9 @@ public class Main {
         String pathToGraphs = "src/Lab12Graphs2/Graphs/";
         //test(pathToGraphs + "G1.txt");
         //test(pathToGraphs + "tinyG.txt");
-        //test(pathToGraphs + "medium250.txt");
-        //test(pathToGraphs + "large1000.txt");
-        test(pathToGraphs + "XL1000.txt");
+        //test(pathToGraphs + "M250.txt");
+        //test(pathToGraphs + "L1000.txt");
+        //test(pathToGraphs + "XL10000.txt");
     }
 
     public static void test(String path) {
@@ -31,7 +33,6 @@ public class Main {
         Instant end;
         IWeightedDigraph mst;
 
-        System.out.println("Startin mst");
         start = Instant.now();
         mst = kruskalMST.makeMinimal(listGraph);
         end = Instant.now();
@@ -51,6 +52,6 @@ public class Main {
         mst = primMST.makeMinimal(matrixGraph);
         end = Instant.now();
         System.out.println("Prim matrix time: " + Duration.between(start, end).toMillis() + " Is MST: " + MST.checker(mst));
-
+        System.out.println();
     }
 }

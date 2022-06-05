@@ -13,8 +13,10 @@ public class AdjacencyMatrixWeightedDigraph implements IWeightedDigraph {
     public AdjacencyMatrixWeightedDigraph(int numberOfVertices) {
         adjList = new ArrayList<>(numberOfVertices);
 
+        System.out.println(numberOfVertices);
         for (int i = 0; i < numberOfVertices; i++) {
             ArrayList<Double> curVertex = new ArrayList<>(numberOfVertices);
+            if(i%100 == 0) System.out.println(i);
             for (int j = 0; j < numberOfVertices; j++) {
                 curVertex.add(Double.POSITIVE_INFINITY);
             }

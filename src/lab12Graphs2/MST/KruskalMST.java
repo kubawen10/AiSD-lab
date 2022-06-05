@@ -15,7 +15,6 @@ public class KruskalMST extends MST {
     public IWeightedDigraph makeMinimal(IWeightedDigraph graph) {
         IWeightedDigraph returnGraph;
 
-        System.out.println("Creating new graph");
         //decide which graph type to return
         if (graph instanceof AdjacencyListWeightedDigraph) {
             returnGraph = new AdjacencyListWeightedDigraph(graph.vertexCount());
@@ -25,14 +24,13 @@ public class KruskalMST extends MST {
             return null;
         }
 
-        System.out.println("Starting creating sets");
         //sets of vertices
         sets = new ArrayList<>();
         //each vertex is disjoint set
         for (int i = 0; i < graph.vertexCount(); i++) {
             sets.add(set.makeSet(i));
         }
-        System.out.println("created sets");
+
         //list of edges
         ArrayList<WeightedEdge> edges = new ArrayList<>();
         for (int i = 0; i < graph.vertexCount(); i++) {
@@ -46,10 +44,9 @@ public class KruskalMST extends MST {
                 }
             }
         }
-        System.out.println("created list of edges");
         //sort edges by weight, then by beginning edge, then by end edge
         Collections.sort(edges);
-        System.out.println("sorted");
+
 
         for (int i = 0; i < edges.size(); i++) {
             WeightedEdge curEdge = edges.get(i);
